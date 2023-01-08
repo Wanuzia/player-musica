@@ -1,9 +1,12 @@
+import { Player } from "./components/player";
+import GlobalStyle from "./styles/global";
 
 function App() {
   return (
     <div >
       <header >
-        Welcome to Player
+      <GlobalStyle />
+       <Player/>
       </header>
     </div>
   );
