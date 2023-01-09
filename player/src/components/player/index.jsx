@@ -10,16 +10,15 @@ export const MusicCardPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('ended', handleNext);
 
-    return () => {
-      audio.removeEventListener('timeupdate', updateProgress);
-      audio.removeEventListener('ended', handleNext);
-    };
-  }, [currentIndex]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleNext = () => {
+    audio.src = music[(currentIndex + 1) % music.length].src;
+    setCurrentIndex((currentIndex + 1) % music.length);
+    if(isPlaying) {
+      audio.play()
+    }
+  };
   const updateProgress = () => {
     setProgress((audio.currentTime / audio.duration) * 100);
   };
@@ -35,19 +34,27 @@ export const MusicCardPlayer = () => {
     setIsPlaying(false);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((currentIndex + 1) % music.length);
-    audio.src = music[currentIndex].src;
-    // handlePlay()
-  };
-
   const handlePrev = () => {
+    audio.src = music[(currentIndex - 1 + music.length) % music.length].src;
     setCurrentIndex((currentIndex - 1 + music.length) % music.length);
-    audio.src = music[currentIndex].src;
+    if(isPlaying) {
+      audio.play()
+    }    
   };
 
   const timeformated = durationInSeconds(music[currentIndex].duration)
+  
+  useEffect(() => {
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', handleNext);
 
+    return () => {
+      audio.removeEventListener('timeupdate', updateProgress);
+      audio.removeEventListener('ended', handleNext);
+    };
+  }, [currentIndex, handleNext]);
+
+  
   return (
     <S.MusicCard>
       <img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png" alt="Imagem em dois tons de lilás, que lembram uma flor." />
