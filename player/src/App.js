@@ -1,4 +1,4 @@
-import { Player } from "./components/player";
+import { MusicCardPlayer } from "./components/player";
 import GlobalStyle from "./styles/global";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div >
       <header >
       <GlobalStyle />
-       <Player/>
+       <MusicCardPlayer/>
       </header>
     </div>
   );
