@@ -11,15 +11,30 @@ export const MusicCard = styled.div`
     text-align: center;
     align-content: center;
     margin: 2.3rem;
-
 @media${media.tablet} {
-    display: flex;
-    flex-direction: row;
+
 }
 `
+export const HeadContainer = styled.div`
+@media${media.tablet} {
+display: flex;
+flex-direction: row;
+gap: 3rem;
+justify-content: center;
+}
+`
+
 export const CardImage = styled.img`
     width: 190px;
     height: 190px;
+    @media${media.tablet} {
+        width: 15rem;
+        heigth: 18rem;
+}
+    @media${media.desktop} {
+        width: 20rem;
+        heigth: 15rem;
+}
 `
 export const Typography = styled.div`
 margin: 2.3rem;
@@ -41,6 +56,7 @@ export const Controls = styled.div`
 display: flex;
 margin-bottom: 2.3rem;
 justify-content: space-evenly;
+padding: 3rem;
 `
 export const ControlButton = styled.button`
 `

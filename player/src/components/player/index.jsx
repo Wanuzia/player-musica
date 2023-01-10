@@ -8,6 +8,10 @@ import {
 
 const audio = new Audio();
 
+function isDesktop() {
+  return window.innerWidth >= 769;
+}
+
 export const MusicCardPlayer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -58,6 +62,7 @@ export const MusicCardPlayer = () => {
 
   return (
     <S.MusicCard>
+      <S.HeadContainer>
       <S.CardImage
         src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png"
         alt="Imagem em dois tons de lilás, que lembram uma flor."
@@ -66,6 +71,7 @@ export const MusicCardPlayer = () => {
         <S.Title>{music[currentIndex].title}</S.Title>
         <S.Artist>{music[currentIndex].artist}</S.Artist>
       </S.Typography>
+      </S.HeadContainer>
       <S.Controls>
         <S.ControlButton onClick={handlePrev}>
           <img
@@ -95,7 +101,8 @@ export const MusicCardPlayer = () => {
           />
         </S.ControlButton>
       </S.Controls>
-      <div>
+     {isDesktop()? ' ' : 
+     (<div>
         <div
           className="progress-bar"
           style={{
@@ -113,7 +120,7 @@ export const MusicCardPlayer = () => {
           {formatTime(timeformated)}
         </S.TimeElapsed>
         </div>
-      </div>
+      </div>)}
     </S.MusicCard>
   );
 };
