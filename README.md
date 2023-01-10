@@ -1,4 +1,4 @@
-<div align='center> # Player de música </div>
+# Player de música
 
 Player de Música - Desafio 1 #boracodar - Rocketseat
 
