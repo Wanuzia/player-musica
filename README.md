@@ -11,6 +11,11 @@ Player de Música - Desafio 1 #boracodar - Rocketseat
 
 Ao acessar o site pelo navegador Chrome, o mesmo altera a url de http para https, por isso, pode acontecer de não conseguir ouvir as músicas no site a partir deste navegador pelo Mac, em sua versão atualizada.
 
+<div align='center'>
+  
+https://user-images.githubusercontent.com/98324557/211683380-f59b52d9-95db-4334-9533-dff9bac5f500.mov
+
+</div>
 ## Link para ver acessar o site com deploy no surge: <a href="https://music-player-wanuzia.surge.sh/">Music Player By Wanuzia<a>
 
 
