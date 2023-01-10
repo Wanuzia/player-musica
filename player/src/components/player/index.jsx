@@ -64,7 +64,7 @@ export const MusicCardPlayer = () => {
       />
       <S.Typography>
         <S.Title>{music[currentIndex].title}</S.Title>
-        <h2>{music[currentIndex].artist}</h2>
+        <S.Artist>{music[currentIndex].artist}</S.Artist>
       </S.Typography>
       <S.Controls>
         <S.ControlButton onClick={handlePrev}>
@@ -105,22 +105,14 @@ export const MusicCardPlayer = () => {
             height: "5px",
           }}
         />
-        <p
-          className="time-elapsed"
-          style={{
-            display: 'flex'
-          }}
-        >
+        <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', padding: '1rem'}}>
+        <S.TimeElapsed className="time-elapsed">
           {formatTime(audio.currentTime)}
-        </p>
-        <p
-          className="time-elapsed"
-          style={{
-            display: 'flex'
-          }}
-        >
+        </S.TimeElapsed>
+        <S.TimeElapsed className="time-elapsed">
           {formatTime(timeformated)}
-        </p>
+        </S.TimeElapsed>
+        </div>
       </div>
     </S.MusicCard>
   );

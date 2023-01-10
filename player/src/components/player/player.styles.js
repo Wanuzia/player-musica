@@ -17,24 +17,33 @@ export const MusicCard = styled.div`
     flex-direction: row;
 }
 `
-
 export const CardImage = styled.img`
     width: 190px;
     height: 190px;
 `
-
-export const Title = styled.h2`
-    weight: 700;
-`
-
 export const Typography = styled.div`
 margin: 2.3rem;
+text-align: center;
+display: flex;
+flex-direction: column;
+padding: 0px;
+gap: 9.6px;
+`
+export const Title = styled.p`
+font-weight: 700;
+font-size: 24px;
+`
+export const Artist = styled.p`
+color: #C4C4CC;
+font-size: 19px;
 `
 export const Controls = styled.div`
 display: flex;
 margin-bottom: 2.3rem;
 justify-content: space-evenly;
 `
-
 export const ControlButton = styled.button`
+`
+export const TimeElapsed = styled.p`
+
 `
