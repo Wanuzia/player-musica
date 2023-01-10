@@ -1,7 +1,10 @@
 import * as S from "./player.styles.js";
 import React, { useEffect, useState } from "react";
 import { music } from "../../resources/musics.js";
-import { durationInSeconds, formatTime } from "../../utils/durationInSeconds.js";
+import {
+  durationInSeconds,
+  formatTime,
+} from "../../utils/durationInSeconds.js";
 
 const audio = new Audio();
 
@@ -10,13 +13,12 @@ export const MusicCardPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleNext = () => {
     audio.src = music[(currentIndex + 1) % music.length].src;
     setCurrentIndex((currentIndex + 1) % music.length);
-    if(isPlaying) {
-      audio.play()
+    if (isPlaying) {
+      audio.play();
     }
   };
   const updateProgress = () => {
@@ -26,7 +28,7 @@ export const MusicCardPlayer = () => {
   const handlePlay = () => {
     audio.src = music[currentIndex].src;
     audio.play();
-      setIsPlaying(true);
+    setIsPlaying(true);
   };
 
   const handlePause = () => {
@@ -37,38 +39,89 @@ export const MusicCardPlayer = () => {
   const handlePrev = () => {
     audio.src = music[(currentIndex - 1 + music.length) % music.length].src;
     setCurrentIndex((currentIndex - 1 + music.length) % music.length);
-    if(isPlaying) {
-      audio.play()
-    }    
+    if (isPlaying) {
+      audio.play();
+    }
   };
 
-  const timeformated = durationInSeconds(music[currentIndex].duration)
-  
+  const timeformated = durationInSeconds(music[currentIndex].duration);
+
   useEffect(() => {
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('ended', handleNext);
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("ended", handleNext);
 
     return () => {
-      audio.removeEventListener('timeupdate', updateProgress);
-      audio.removeEventListener('ended', handleNext);
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("ended", handleNext);
     };
   }, [currentIndex, handleNext]);
 
-  
   return (
     <S.MusicCard>
-      <img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png" alt="Imagem em dois tons de lilás, que lembram uma flor." />
-      <h3>{music[currentIndex].title}</h3>
-      <p>{music[currentIndex].artist}</p>
-      <p className="time-elapsed">{formatTime(audio.currentTime)} / {formatTime(timeformated)}</p>
-      <div className="progress-bar" style={{ width: `${progress}%`, background: '#E1E1E6', borderRadius: '20px', height: '5px' }} />
-      <button onClick={handlePrev}><img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/Vectorpreview_ovwdrk.png" alt="ícone de anterior"/></button>
-      {isPlaying ? (
-        <button onClick={handlePause}><img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673228178/pause_jfqili.svg" alt="ícone de pause"/></button>
-      ) : (
-        <button onClick={handlePlay}><img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/play_wspg2l.png" alt="ícone de play"/></button>
-      )}
-      <button onClick={handleNext}><img src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/play-forwardnext_i8ldmv.png" alt="ícone de próxima"/></button>
+      <S.CardImage
+        src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png"
+        alt="Imagem em dois tons de lilás, que lembram uma flor."
+      />
+      <S.Typography>
+        <S.Title>{music[currentIndex].title}</S.Title>
+        <h2>{music[currentIndex].artist}</h2>
+      </S.Typography>
+      <S.Controls>
+        <S.ControlButton onClick={handlePrev}>
+          <img
+            src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/Vectorpreview_ovwdrk.png"
+            alt="ícone de anterior"
+          />
+        </S.ControlButton>
+        {isPlaying ? (
+          <S.ControlButton onClick={handlePause}>
+            <img
+              src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673228178/pause_jfqili.svg"
+              alt="ícone de pause"
+            />
+          </S.ControlButton>
+        ) : (
+          <S.ControlButton onClick={handlePlay}>
+            <img
+              src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/play_wspg2l.png"
+              alt="ícone de play"
+            />
+          </S.ControlButton>
+        )}
+        <S.ControlButton onClick={handleNext}>
+          <img
+            src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673227415/play-forwardnext_i8ldmv.png"
+            alt="ícone de próxima"
+          />
+        </S.ControlButton>
+      </S.Controls>
+      <div>
+        <div
+          className="progress-bar"
+          style={{
+            width: `${progress}%`,
+            background: "#E1E1E6",
+            borderRadius: "20px",
+            height: "5px",
+          }}
+        />
+        <p
+          className="time-elapsed"
+          style={{
+            display: 'flex'
+          }}
+        >
+          {formatTime(audio.currentTime)}
+        </p>
+        <p
+          className="time-elapsed"
+          style={{
+            display: 'flex'
+          }}
+        >
+          {formatTime(timeformated)}
+        </p>
+      </div>
     </S.MusicCard>
   );
 };

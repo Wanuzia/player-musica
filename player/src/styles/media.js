@@ -1,7 +1,7 @@
 import style from './style'
 
 const media = {
-  phone: `(max-width: ${style.screen.xs})`,
+  phone: `(max-width: ${style.screen.xxs})`,
   mobile: `(max-width: ${style.screen.sm})`,
   maxMobile: `(max-width: ${style.screen.mm})`,
   tablet: `(min-width: ${style.screen.xs})`,

@@ -73,8 +73,7 @@ html {
 body {
   font-family: "Roboto", sans-serif;
   line-height: 1.2;
-    background-color: ${colors.primary};
-
+  background-color: ${colors.secondary};
 }
 .wrapper {
   min-height: 100vh;
@@ -173,7 +172,7 @@ a {
 .wave {
   animation: wave 8s linear;
   animation-iteration-count:infinite;
-    fill: ${colors.primaryDark};
+    fill: ${colors.secondary};
 }
 #wave2 {
   animation-duration: 10s;
