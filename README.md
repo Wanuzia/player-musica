@@ -1,5 +1,9 @@
 # Player de música
 
+Projeto realizado usando  <a href="https://pt-br.reactjs.org/"> <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /> </a>.
+
+Para rodar localmente basta seguir o <a href="https://github.com/Wanuzia/player-musica/tree/main/player#readme"> passo a passo do React.</a>
+
 Player de Música - Desafio 1 #boracodar - Rocketseat
 
 - [x] O Desafio 1 consiste em replicar o layout do Figma;
