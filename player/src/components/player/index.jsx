@@ -17,22 +17,29 @@ export const MusicCardPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleNext = () => {
-    audio.src = music[(currentIndex + 1) % music.length].src;
-    setCurrentIndex((currentIndex + 1) % music.length);
-    if (isPlaying) {
-      audio.play();
-    }
-  };
   const updateProgress = () => {
     setProgress((audio.currentTime / audio.duration) * 100);
   };
 
+  async function fetchMusicAndPlay() {
+    try {
+      await fetch(music[currentIndex].src, {
+        mode: "no-cors",
+        referrerPolicy: "unsafe-url",
+      });
+      audio.load();
+      setIsPlaying(true);
+      await audio.play();
+    } catch (error) {
+      console.error(error);
+      audio.pause();
+      setIsPlaying(false);
+    }
+  }
+
   const handlePlay = () => {
-    audio.src = music[currentIndex].src;
-    audio.play();
     setIsPlaying(true);
+    fetchMusicAndPlay();
   };
 
   const handlePause = () => {
@@ -41,15 +48,24 @@ export const MusicCardPlayer = () => {
   };
 
   const handlePrev = () => {
-    audio.src = music[(currentIndex - 1 + music.length) % music.length].src;
     setCurrentIndex((currentIndex - 1 + music.length) % music.length);
     if (isPlaying) {
-      audio.play();
+      handlePlay();
+    }
+  };
+  const handleNext = () => {
+    audio.src = music[(currentIndex + 1) % music.length].src;
+    setCurrentIndex((currentIndex + 1) % music.length);
+    if (isPlaying) {
+      handlePlay();
     }
   };
 
   const timeformated = durationInSeconds(music[currentIndex].duration);
 
+  useEffect(() => {
+    audio.src = music[currentIndex].src;
+  }, [currentIndex]);
   useEffect(() => {
     audio.addEventListener("timeupdate", updateProgress);
     audio.addEventListener("ended", handleNext);
@@ -58,19 +74,19 @@ export const MusicCardPlayer = () => {
       audio.removeEventListener("timeupdate", updateProgress);
       audio.removeEventListener("ended", handleNext);
     };
-  }, [currentIndex, handleNext]);
+  }, [handleNext]);
 
   return (
     <S.MusicCard>
       <S.HeadContainer>
-      <S.CardImage
-        src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png"
-        alt="Imagem em dois tons de lilás, que lembram uma flor."
-      />
-      <S.Typography>
-        <S.Title>{music[currentIndex].title}</S.Title>
-        <S.Artist>{music[currentIndex].artist}</S.Artist>
-      </S.Typography>
+        <S.CardImage
+          src="https://res.cloudinary.com/dc8mp7dgl/image/upload/v1673196798/hans-unsplash_rkmfqe.png"
+          alt="Imagem em dois tons de lilás, que lembram uma flor."
+        />
+        <S.Typography>
+          <S.Title>{music[currentIndex].title}</S.Title>
+          <S.Artist>{music[currentIndex].artist}</S.Artist>
+        </S.Typography>
       </S.HeadContainer>
       <S.Controls>
         <S.ControlButton onClick={handlePrev}>
@@ -101,26 +117,36 @@ export const MusicCardPlayer = () => {
           />
         </S.ControlButton>
       </S.Controls>
-     {isDesktop()? ' ' : 
-     (<div>
-        <div
-          className="progress-bar"
-          style={{
-            width: `${progress}%`,
-            background: "#E1E1E6",
-            borderRadius: "20px",
-            height: "5px",
-          }}
-        />
-        <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', padding: '1rem'}}>
-        <S.TimeElapsed className="time-elapsed">
-          {formatTime(audio.currentTime)}
-        </S.TimeElapsed>
-        <S.TimeElapsed className="time-elapsed">
-          {formatTime(timeformated)}
-        </S.TimeElapsed>
+      {isDesktop() ? (
+        " "
+      ) : (
+        <div>
+          <div
+            className="progress-bar"
+            style={{
+              width: `${progress}%`,
+              background: "#E1E1E6",
+              borderRadius: "20px",
+              height: "5px",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              padding: "1rem",
+            }}
+          >
+            <S.TimeElapsed className="time-elapsed">
+              {formatTime(audio.currentTime)}
+            </S.TimeElapsed>
+            <S.TimeElapsed className="time-elapsed">
+              {formatTime(timeformated)}
+            </S.TimeElapsed>
+          </div>
         </div>
-      </div>)}
+      )}
     </S.MusicCard>
   );
 };
